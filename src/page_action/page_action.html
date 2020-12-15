@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+
+    <link
+      async
+      defer
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lily+Script+One&text=EasyGitHub"
+    />
+
+    <style>
+      body {
+        display: grid;
+        /* prettier-ignore */
+        grid-template-rows: 0.7fr minmax(min-content, max-content) minmax(min-content, max-content);
+        grid-template-columns: minmax(min-content, max-content);
+        grid-template-areas:
+          "header"
+          "fork"
+          "PR";
+      }
+
+      header {
+        grid-area: header;
+        font-size: 1.2rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      fieldset {
+        position: relative;
+        /* border: 1px solid rgba(0, 0, 0, 0.1); */
+        margin-bottom: 1.2em;
+      }
+
+      legend {
+        font-size: 1.3rem;
+        background-color: #000;
+        color: #fff;
+        padding: 3px 6px;
+      }
+
+      #storyIDValue {
+        grid-area: "fork";
+      }
+
+      #localPR {
+        grid-area: "PR";
+      }
+
+      pre {
+        margin: 1rem;
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+
+      button {
+        position: absolute;
+        right: -2px;
+        top: 3px;
+        width: 100px;
+      }
+
+      h1 {
+        font-family: "Lily Script One", cursive, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h3>🐥 Rock the Code Review Sheet 🐥</h3>
+    </header>
+
+    <fieldset>
+      <legend>Story ID</legend>
+      <button id="copyStoryIDButton" title="Copy Story ID" type="button">Copy</button>
+      <pre id="forStoryID"></pre>
+    </fieldset>
+
+    <fieldset>
+      <legend>Total no of lines added</legend>
+
+      <button id="copyTotalAddedLines" title="Copy total lines added" type="button">Copy</button>
+      <pre id="totalLinesAdded"></pre>
+    </fieldset>
+
+    <fieldset>
+      <legend>Total no of lines removed</legend>
+      <button id="copyTotalRemovedLinesButton" title="Copy total lines removed" type="button">Copy</button>
+      <pre id="totalLinesRemoved"></pre>
+    </fieldset>
+
+    <fieldset>
+      <legend>Files Changed</legend>
+      <button id="copyFileNamesButton" title="Copy list of files changed" type="button">Copy</button>
+      <pre id="fileNameList"></pre>
+    </fieldset>
+
+    <fieldset>
+      <legend>Commits</legend>
+      <button id="copyCommitsPRButton" title="Copy commit IDs" type="button">Copy</button>
+      <pre id="commitList"></pre>
+    </fieldset>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
