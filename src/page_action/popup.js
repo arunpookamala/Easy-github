@@ -1,4 +1,4 @@
-const storyIDValue = document.getElementById("forStoryID");
+const titleBranch = document.getElementById("forTitleBranch");
 const addedCount = document.getElementById("totalLinesAdded");
 const removedCount = document.getElementById("totalLinesRemoved");
 const fileNames = document.getElementById("fileNameList");
@@ -18,8 +18,8 @@ const copyToClipboard = code =>
     .then(() => console.log("Copied to clipboard~"))
     .catch(() => console.log("Failed to copy to clipboard..."));
 
-document.getElementById("copyStoryIDButton").addEventListener("click", _ => {
-  const code = extractCopyText(storyIDValue.innerText);
+document.getElementById("copyTitleBranchButton").addEventListener("click", _ => {
+  const code = extractCopyText(titleBranch.innerText);
   copyToClipboard(code);
 });
 
@@ -47,7 +47,7 @@ chrome.tabs.query(
   { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
   function (tabs) {
     const tabId = tabs[0].id;
-    setupStoryIDValue(tabId);
+    setupTitleBranch(tabId);
     setupAddedLineCount(tabId);
     setupFileNames(tabId);
     setupRemovedLineCount(tabId);
@@ -55,21 +55,19 @@ chrome.tabs.query(
   }
 );
 
-function setupStoryIDValue(tabId) {
+function setupTitleBranch(tabId) {
   const code = `(function getStoryID(){
-      const storyID = document.querySelector('.select2-chosen') 
-        ? /[^/]*$/.exec(document.querySelector('.select2-chosen').textContent)[0]
-        : undefined;
-      return { storyID };
+      const titleBranchText = document.querySelectorAll(".range-cross-repo-pair .branch .css-truncate-target")[1].innerText
+      return { titleBranchText };
     })()`;
   chrome.tabs.executeScript(tabId, { code }, function (result) {
-    const { storyID } = result[0];
+    const { titleBranchText } = result[0];
 
-    if (storyID) {
-      storyIDValue.innerText = storyID;
+    if (titleBranchText) {
+      titleBranch.innerText = titleBranchText;
     } else {
-      storyIDValue.innerText = `No story ID found.`;
-      copyStoryIDButton.style.visibility = "hidden";
+      titleBranch.innerText = `No title branch found.`;
+      copyTitleBranchButton.style.visibility = "hidden";
     }
   });
 }
